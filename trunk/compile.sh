@@ -1,1 +1,1 @@
-g++ -Wall -g main.cpp CookTimerDialog.cpp -o CookTimer `/usr/lib/wx/config/gtk2-unicode-release-2.6 --cflags --libs` `pkg-config --cflags gtk+-2.0` `pkg-config --libs gtk+-2.0`
+g++ -Wall -g main.cpp CookTimerFrame.cpp -o CookTimer `wx-config --cflags --libs` `pkg-config --cflags gtk+-2.0` `pkg-config --libs gtk+-2.0`
