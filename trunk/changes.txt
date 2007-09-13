@@ -1,3 +1,6 @@
+Changes since 0.9:
+- Fixed inappropriate icon sizes bug for Win32 and Gtk
+
 Changes since 0.85:
 - Enh: time in tooltip is displayed in 00:00:00 format(2-digit width always)
 - Enh: sound stops when reset or start is pressed after the previous timer times out.
