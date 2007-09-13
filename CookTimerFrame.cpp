@@ -4,7 +4,8 @@
 
 // the application icon (under Windows and OS/2 it is in resources)
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
-	#include "tray.xpm"
+	#include "A.xpm"
+	#include "TrayIcon.xpm"
 #endif
 
 BEGIN_EVENT_TABLE(CookTimerTaskBarIcon, wxTaskBarIcon)
@@ -41,7 +42,18 @@ CookTimerFrame::CookTimerFrame(wxWindow* parent)
 	  timeoutSound(wxT("alarm.wav"), false)
 	#endif	// _WIN32
  	{
-	SetIcon(wxICON(TrayIcon));
+	#ifdef _WIN32
+		// The icon in the resources contains both sizes and is sufficient on
+		// its own
+		SetIcon(wxICON(A));
+	#else
+		// we have to make an IconBundle containing the 2 icons to avoid
+		// the Window manager having to scale the icon for us which doesn't
+		// always look good
+		wxIconBundle icons(wxICON(A));
+		icons.AddIcon(wxICON(TrayIcon));
+		SetIcons(icons);
+	#endif	// !_WIN32
 	
     const wxString presetsRadioBox_choices[] = {
         _("3 min"),
@@ -72,7 +84,7 @@ CookTimerFrame::CookTimerFrame(wxWindow* parent)
     set_properties();
     do_layout();
     // end wxGlade
-
+    
 	_taskBarIcon = new CookTimerTaskBarIcon();
 #if defined(__WXCOCOA__)
 	_dockIcon = new CookTimerTaskBarIcon(wxTaskBarIcon::DOCK);
@@ -127,8 +139,8 @@ void CookTimerFrame::do_layout()
     rootSizer->Add(leftSizer, 1, wxEXPAND, 0);
     wxStaticLine* static_line_1 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL);
     rootSizer->Add(static_line_1, 0, wxEXPAND, 0);
-    buttonsSizer->Add(_startStopButton, 0, wxALL, 3);
-    buttonsSizer->Add(_resetButton, 0, wxALL, 3);
+    buttonsSizer->Add(_startStopButton, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 3);
+    buttonsSizer->Add(_resetButton, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 3);
     buttonsSizer->Add(_continuousCheckbox, 0, wxALL, 3);
     rootSizer->Add(buttonsSizer, 0, wxALIGN_CENTER_VERTICAL, 0);
     SetSizer(rootSizer);

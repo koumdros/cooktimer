@@ -1,7 +1,7 @@
 
 #include "wx/msw/wx.rc"
 A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "tray.ico"
-TrayIcon	ICON 	"tray.ico"
+TrayIcon	ICON 	"icon_16.ico"
 Bell 		WAVE	DISCARDABLE	"alarm.wav"
 
 // lines ending with the comment 'version' should be updated manually everytime the version is changed.
@@ -10,12 +10,12 @@ Bell 		WAVE	DISCARDABLE	"alarm.wav"
 #define ProductName "Cook Timer"
 #define ProductNameVersion ProductName " v" ProductVersion
 #define ProductNameDev "CookTimer"
-#define FileVersion	   "0.9.0"		// version
-#define ProductVersion "0.9.0"		// version
+#define FileVersion	   "0.9.1"		// version
+#define ProductVersion "0.9.1"		// version
 
 1 VERSIONINFO
-FILEVERSION 0,9,0,0				// version
-PRODUCTVERSION 0,9,0,0				// version
+FILEVERSION 0,9,1,0				// version
+PRODUCTVERSION 0,9,1,0				// version
 FILEOS VOS_NT_WINDOWS32
 FILETYPE VFT_APP
 {

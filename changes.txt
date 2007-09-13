@@ -6,6 +6,7 @@ Changes since 0.85:
 	- When controls are disabled, focus is transferred to buttons to allow them to be pressed.
 - Enh: Added the continuous checkbox.
 - Enh: Changed the alarm sound with a much better one.
+- Enh: Changed the icon to a much better one.
 
 Changes since 0.8:
 - Enh: Auto-popup on timeout.
