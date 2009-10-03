@@ -56,7 +56,7 @@ resources = env.RES(["resources.rc"]);
 buildResult = env.Program("build/CookTimer", ["CookTimerFrame.cpp", "main.cpp",
 						resources])
 
-if (int(float(env["MSVS_VERSION"])) == 8):
+if (int(float(env["MSVS_VERSION"][0:2])) >= 8):
 	# Add a post-build step to embed the manifest using mt.exe
 	# The number at the end of the line indicates the file type (1: EXE; 2:DLL).
 	env.AddPostAction(buildResult, 'mt.exe -nologo -manifest ${TARGET}.manifest -outputresource:$TARGET;1')
