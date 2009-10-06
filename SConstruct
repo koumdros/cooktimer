@@ -70,6 +70,6 @@ if (debug):
 else:
 	# todo: enable before releasing.
 	#env.Append(CPPDEFINES = ["NDEBUG"])
-	env.Append(CCFLAGS = ["-Ox", "-G6", "-GA"])	# optimization options
+	env.Append(CCFLAGS = ["-Ox", "-GA"])	# optimization options
 	env.Append(CCFLAGS = ["-MD"]);
-	env.Append(LINKFLAGS = ["-release", "-OPT:REF", "-OPT:NOWIN98", "-OPT:ICF=32"]);
+	env.Append(LINKFLAGS = ["-release", "-OPT:REF", "-OPT:ICF=32"]);
