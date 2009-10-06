@@ -2,7 +2,7 @@ import os
 import sys
 from os.path import join;
 
-wxFolder = wxCfg = None
+wxFolder = None
 
 # this function was copied from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52296
 def GetCommandOutput2(command):
@@ -14,8 +14,8 @@ def GetCommandOutput2(command):
     return data
 
 def RunWxConfig(parameters):
-	assert(wxFolder != None and wxCfg != None);
-	return GetCommandOutput2("wx-config \"--prefix=%s\" \"--wxcfg=%s\" %s" % (wxFolder, wxCfg, parameters));
+	assert(wxFolder != None and debug != None);
+	return GetCommandOutput2("wx-config \"--prefix=%s\" \"--debug=%s\" %s" % (wxFolder, ("yes", "no")[debug == False], parameters));
 
 opts = Options()
 opts.Add(BoolOption('release', 'Set to 1 for release build', 0))
@@ -37,8 +37,6 @@ debug = (env['release'] == 0)
 psdk_libs = ["user32", "kernel32", "shell32", "shlwapi", "comctl32", "gdi32", "ole32", "wsock32", "advapi32", "userenv", "Comdlg32", "Rpcrt4", "Netapi32", "uuid", "Version", "oleaut32"]
 				  
 env.Append(CCFLAGS = ["-EHsc"])	# enable exceptions
-
-wxCfg = ("vc_lib/mswud", "vc_lib/mswu")[debug == False];
 
 cxxFlags = RunWxConfig("--cxxflags")
 libs = RunWxConfig("--libs")
