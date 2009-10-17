@@ -21,7 +21,7 @@ def SystemBacktick(program):
 
 def SystemWXConfig(env, args):
 	if sys.platform=='win32':
-		return SystemBacktick(env['wxconfig']+' --wxcfg='+env['ENV']['WXCFG']+' '+args+env['wxconfig_postargs'])
+		return SystemBacktick(env['wxconfig']+' '+args+env['wxconfig_postargs'])
 	else:
 		return SystemBacktick(env['wxconfig']+' '+args+env['wxconfig_postargs'])
 
@@ -56,6 +56,27 @@ def CheckWXConfigComponents(context, libraries):
 # but reverts to release or default when that fails.
 def CheckWXConfigWin(context, version, debug):
 	context.Message('Checking for wxWidgets >= %s... '%version)
+	
+	# Compiler detection is needed for wx-config-win so it can produce
+	# suitable flags
+	cxx=context.env['CXX'];
+	
+	# HACK for scons 1.2 on Windows where env['CXX'] == '$CC'
+	while cxx[0] == '$':
+		cxx = context.env[cxx[1:]];
+	# end HACK
+
+	# some helper variables
+	if cxx == 'cl':
+		compiler = "vc";
+	elif cxx == 'g++':
+		compiler = "gcc";
+	elif cxx == 'dmc':	# TODO: Needs revision
+		compiler = "dmc";
+
+	context.env['wxconfig_compiler'] = compiler;
+	
+	context.Message('Detecting compiler >= %s... '%compiler)
 
 	# Try to find it in path
 	wx_prog = context.env.WhereIs(context.env['wxconfig'])
@@ -79,13 +100,13 @@ def CheckWXConfigWin(context, version, debug):
 
 		# Try debugging version first if requested, else fallback to release
 		if debug:
-			context.env['ENV']['WXCFG'] = 'vc_lib\mswd'
-			if SystemWXConfig(context.env,'--libs')[0] == 0:
+			args = "--debug=true"
+			if SystemWXConfig(context.env, args + ' --libs')[0] == 0:
 				return CheckWXConfigVersion(context, version)
 
 		# Non-debug
-		context.env['ENV']['WXCFG'] = 'vc_lib\msw'
-		if SystemWXConfig(context.env,'--libs')[0] == 0:
+		args = "--debug=false"
+		if SystemWXConfig(context.env, args + ' --libs')[0] == 0:
 			# this is the only configuration: use it
 			return CheckWXConfigVersion(context, version)
 
@@ -199,10 +220,15 @@ def ParseWXConfig(env):
 	if build_platform=='win32' and target_platform=='win32':
 		# Use wx-config, yay!
 		# ParseConfig() on windows is broken, so the following is done instead
-		cflags = SystemWXConfig(env,'--cxxflags')[1]
+		
+		compilerFlag = "--compiler=%s " % env['wxconfig_compiler']
+		
+		cflags = SystemWXConfig(env,compilerFlag + '--cxxflags')[1]
 		env.AppendUnique(CPPFLAGS = cflags.strip().split(' '))
-		libs = SystemWXConfig(env,'--libs')[1]
+		libs = SystemWXConfig(env,compilerFlag + '--libs')[1]
 		env.AppendUnique(LINKFLAGS = libs.strip().split(' '))
+		rcflags = SystemWXConfig(env,compilerFlag + '--rcflags')[1]
+		env.AppendUnique(RCFLAGS = rcflags.strip().split(' '));
 	elif target_platform == 'darwin':
 		# MacOSX doesn't handle '-framework foobar' correctly, do that separately.
 		env.ParseConfig(env['wxconfig']+' --cxxflags'+env['wxconfig_postargs'])
