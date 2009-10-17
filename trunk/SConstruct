@@ -34,7 +34,7 @@ env['wxconfig']='wx-config'
 
 compiler = env['CXX']
 
-# HACK for scons on Windows where env['CXX'] == '$CC'
+# HACK for scons 1.2 on Windows where env['CXX'] == '$CC'
 while compiler[0] == '$':
 	compiler = env[compiler[1:]];
 # end HACK
@@ -84,12 +84,12 @@ if compilerIsVC:
 	if (debug):
 		env.Append(CXXFLAGS = ["-Zi"])
 		env.Append(CXXFLAGS = ["-RTCcsu", "-GS"]) # generate stack corruption checks
-		env.Append(CXXFLAGS = ["-MD"]);
+		env.Append(CXXFLAGS = ["-MTd"]);
 		env.Append(LINKFLAGS = ["-debug"]);
 	else:
 		env.Append(CPPDEFINES = ["NDEBUG"])
 		env.Append(CXXFLAGS = ["-Ox", "-GA"])	# optimization options
-		env.Append(CXXFLAGS = ["-MD"]);
+		env.Append(CXXFLAGS = ["-MT"]);
 		env.Append(LINKFLAGS = ["-release", "-OPT:REF", "-OPT:ICF=32"]);
 elif compilerIsGccLike:
 	if (debug):
