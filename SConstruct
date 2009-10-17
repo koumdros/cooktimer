@@ -84,12 +84,14 @@ if compilerIsVC:
 	if (debug):
 		env.Append(CXXFLAGS = ["-Zi"])
 		env.Append(CXXFLAGS = ["-RTCcsu", "-GS"]) # generate stack corruption checks
-		env.Append(CXXFLAGS = ["-MTd"]);
+        	# Not needed because wx flags already contain one
+		#env.Append(CXXFLAGS = ["-MTd"]);
 		env.Append(LINKFLAGS = ["-debug"]);
 	else:
 		env.Append(CPPDEFINES = ["NDEBUG"])
 		env.Append(CXXFLAGS = ["-Ox", "-GA"])	# optimization options
-		env.Append(CXXFLAGS = ["-MT"]);
+		# Not needed because wx flags already contain one
+		#env.Append(CXXFLAGS = ["-MT"]);
 		env.Append(LINKFLAGS = ["-release", "-OPT:REF", "-OPT:ICF=32"]);
 elif compilerIsGccLike:
 	if (debug):
