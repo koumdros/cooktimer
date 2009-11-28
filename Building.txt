@@ -1,0 +1,19 @@
+On Linux:
+---------
+- Make sure you have the wxWidgets 2.8.x development libraries installed
+  i.e. on Ubuntu/Debian run
+  apt-get install libwxgtk2.8-dev
+- Install scons
+  i.e. on Ubuntu/Debian run
+  apt-get install scons
+- In the directory where the source-code exists, run scons
+
+On Windows(using the provided solution file)
+--------------------------------------------
+- Modify solution.bat so that the envvar WXWIN refers to the path where you have a properly built wxWidgets installation, must be 2.8.x
+- Run solution.bat
+- Build the opened solution
+
+On Windows(without using the provided solution file)
+----------------------------------------------------
+TBD
