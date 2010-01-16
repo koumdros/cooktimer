@@ -28,6 +28,7 @@ BEGIN_EVENT_TABLE(CookTimerFrame, wxFrame)
     EVT_BUTTON(ID_ResetButton, CookTimerFrame::OnResetButton)
 	EVT_ICONIZE(CookTimerFrame::OnIconize)
 	EVT_RADIOBOX(wxID_ANY, CookTimerFrame::OnPresetsRadioBox)
+	EVT_CHECKBOX(ID_AutoRestartCheckBox, CookTimerFrame::OnAutoResetChecked)
 END_EVENT_TABLE()
 
 CookTimerFrame::CookTimerFrame(wxWindow* parent)
@@ -79,7 +80,8 @@ CookTimerFrame::CookTimerFrame(wxWindow* parent)
     _progressBar = new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL|wxGA_SMOOTH);
     _startStopButton = new wxButton(this, ID_StartStopButton, wxEmptyString);
     _resetButton = new wxButton(this, ID_ResetButton, _("&Reset"));
-    _continuousCheckbox = new wxCheckBox(this, wxID_ANY, _("Continuous"));
+    _autoRestartCheckbox = new wxCheckBox(this, ID_AutoRestartCheckBox, _("Automatic restart"));
+    _ringForeverCheckbox = new wxCheckBox(this, wxID_ANY, _("Ring fovever"));
 
     set_properties();
     do_layout();
@@ -118,6 +120,7 @@ void CookTimerFrame::set_properties()
     _secondsSpinCtrl->SetToolTip(_("Seconds"));
     _remainingTimeStatic->SetFont(wxFont(32, wxDEFAULT, wxNORMAL, wxNORMAL, 0, wxT("")));
     _startStopButton->SetDefault();
+    _autoRestartCheckbox->SetToolTip(_("Restart countdown automatically when it reaches zero"));
     // end wxGlade
     
     _presetsRadioBox->SetSelection(0);
@@ -141,7 +144,8 @@ void CookTimerFrame::do_layout()
     rootSizer->Add(static_line_1, 0, wxEXPAND, 0);
     buttonsSizer->Add(_startStopButton, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 3);
     buttonsSizer->Add(_resetButton, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 3);
-    buttonsSizer->Add(_continuousCheckbox, 0, wxALL, 3);
+    buttonsSizer->Add(_autoRestartCheckbox, 0, wxALL, 3);
+    buttonsSizer->Add(_ringForeverCheckbox, 0, wxALL, 3);
     rootSizer->Add(buttonsSizer, 0, wxALIGN_CENTER_VERTICAL, 0);
     SetSizer(rootSizer);
     rootSizer->Fit(this);
@@ -167,7 +171,7 @@ void CookTimerFrame::OnTimer(wxTimerEvent &event)
 			Iconize(false);
 			}
 
-		if (_continuousCheckbox->IsChecked())
+		if (_autoRestartCheckbox->IsChecked())
 			{
 			timeoutSound.Play(wxSOUND_ASYNC);
 			_seconds = GetPeriod();
@@ -184,7 +188,7 @@ void CookTimerFrame::OnTimer(wxTimerEvent &event)
 			}
 		else
 			{
-			timeoutSound.Play(wxSOUND_LOOP | wxSOUND_ASYNC);
+			timeoutSound.Play((_ringForeverCheckbox->GetValue() ? wxSOUND_LOOP : 0) | wxSOUND_ASYNC);
 			_timer.Stop();
 			
 			_running = false;
@@ -250,7 +254,8 @@ void CookTimerFrame::OnResetButton(wxCommandEvent &evt)
 void CookTimerFrame::UpdateControls()
 	{
 	_presetsRadioBox->Enable(_reset);
-	_continuousCheckbox->Enable(_reset);
+	_autoRestartCheckbox->Enable(_reset);
+	_ringForeverCheckbox->Enable(_reset);
 	
 	_hoursSpinCtrl->Enable(_reset && IsCustomSelected());
 	_minutesSpinCtrl->Enable(_reset && IsCustomSelected());
@@ -312,4 +317,12 @@ unsigned int CookTimerFrame::GetPeriod() const
 		{
 		return GetCustomValue();
 		}		
+	}
+
+void CookTimerFrame::OnAutoResetChecked(wxCommandEvent &evt)
+	{
+	if (evt.IsChecked())
+		_ringForeverCheckbox->SetValue(false);
+
+	_ringForeverCheckbox->Enable(!evt.IsChecked());
 	}
