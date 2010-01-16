@@ -43,7 +43,8 @@ class CookTimerFrame: public wxFrame
     // begin wxGlade: CookTimerFrame::ids
     enum {
         ID_StartStopButton = wxID_HIGHEST + 1000,
-        ID_ResetButton = wxID_HIGHEST + 1001
+        ID_ResetButton = wxID_HIGHEST + 1001,
+        ID_AutoRestartCheckBox = wxID_HIGHEST + 1002
     };
     // end wxGlade
 
@@ -67,6 +68,7 @@ class CookTimerFrame: public wxFrame
 		void OnResetButton(wxCommandEvent &evt);
 		void OnIconize(wxIconizeEvent &evt);
 		void OnPresetsRadioBox(wxCommandEvent &evt) { UpdateControls(); }
+		void OnAutoResetChecked(wxCommandEvent &evt);
 
 		wxTimer _timer;
 
@@ -90,7 +92,8 @@ class CookTimerFrame: public wxFrame
     wxGauge* _progressBar;
     wxButton* _startStopButton;
     wxButton* _resetButton;
-    wxCheckBox* _continuousCheckbox;
+    wxCheckBox* _autoRestartCheckbox;
+    wxCheckBox* _ringForeverCheckbox;
     // end wxGlade
 
 		DECLARE_EVENT_TABLE();
