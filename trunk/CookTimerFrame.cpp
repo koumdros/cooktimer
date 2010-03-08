@@ -165,6 +165,7 @@ void CookTimerFrame::OnTimer(wxTimerEvent &event)
 
 	if (_seconds == 0)
 		{
+		Raise();
 		if (!IsShown())
 			{
 			Show(true);
