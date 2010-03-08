@@ -87,7 +87,6 @@ if compilerIsVC:
 		env.Append(LINKFLAGS = ["-debug"]);
 	else:
 		env.Append(CPPDEFINES = ["NDEBUG"])
-		env.Append(CXXFLAGS = ["-Ox", "-GA"])	# optimization options
 		# Not needed because wx flags already contain one
 		#env.Append(CXXFLAGS = ["-MT"]);
 		env.Append(LINKFLAGS = ["-release", "-OPT:REF", "-OPT:ICF=32"]);
