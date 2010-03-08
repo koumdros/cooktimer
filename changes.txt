@@ -1,3 +1,8 @@
+Changes since 0.9.1:
+- Added "Ring Forever" option.
+- Window is raised on timeout.
+- Minor GUI improvements.
+
 Changes since 0.9:
 - Fixed inappropriate icon sizes bug for Win32 and Gtk
 

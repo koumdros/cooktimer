@@ -6,16 +6,16 @@ Bell 		WAVE	DISCARDABLE	"alarm.wav"
 
 // lines ending with the comment 'version' should be updated manually everytime the version is changed.
 
-#define CompanyName "Thunderbird Software"
+#define CompanyName "Diaa Sami"
 #define ProductName "Cook Timer"
 #define ProductNameVersion ProductName " v" ProductVersion
 #define ProductNameDev "CookTimer"
-#define FileVersion	   "0.9.1"		// version
-#define ProductVersion "0.9.1"		// version
+#define FileVersion	   "0.9.2"		// version
+#define ProductVersion "0.9.2"		// version
 
 1 VERSIONINFO
-FILEVERSION 0,9,1,0				// version
-PRODUCTVERSION 0,9,1,0				// version
+FILEVERSION 0,9,2,0				// version
+PRODUCTVERSION 0,9,2,0				// version
 FILEOS VOS_NT_WINDOWS32
 FILETYPE VFT_APP
 {
@@ -26,7 +26,7 @@ BLOCK "StringFileInfo"
 		VALUE "FileDescription", ProductName
 		VALUE "ProductVersion", ProductVersion
 		VALUE "FileVersion", FileVersion
-		VALUE "LegalCopyright", "Copyright(C) 2007, " CompanyName
+		VALUE "LegalCopyright", "Copyright(C) 2010, " CompanyName
 		VALUE "ProductName", ProductName
 		VALUE "CompanyName", CompanyName
 		VALUE "InternalName", ProductNameDev
