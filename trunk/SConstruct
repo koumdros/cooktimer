@@ -79,8 +79,6 @@ if targetPlatformIsWindows:
 	resources = env.RES(["resources.rc"]);
 
 if compilerIsVC:
-	env.Append(CCFLAGS = ["-EHsc"])	# enable exceptions
-
 	if (debug):
 		env.Append(CXXFLAGS = ["-Zi"])
 		env.Append(CXXFLAGS = ["-RTCcsu", "-GS"]) # generate stack corruption checks
