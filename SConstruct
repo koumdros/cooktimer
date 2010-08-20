@@ -61,7 +61,7 @@ conf = Configure(env, custom_tests = {'CheckWXConfig' : CheckWXConfig })
 #                   wxWidgets 2.6 if I'm correct. You'll usually need
 #                   ['adv', 'core', 'base'], in this order. If you use
 #                   wxGLCanvas, prepend 'gl' like below.
-if not conf.CheckWXConfig('2.6', ['core', 'base', 'adv'], debug):
+if not conf.CheckWXConfig('2.6', ['adv', 'core', 'base'], debug):
 	print 'Error finding wxWidgets library.'
 
 env = conf.Finish()
