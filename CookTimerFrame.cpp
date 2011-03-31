@@ -81,7 +81,7 @@ CookTimerFrame::CookTimerFrame(wxWindow* parent)
     _startStopButton = new wxButton(this, ID_StartStopButton, wxEmptyString);
     _resetButton = new wxButton(this, ID_ResetButton, _("&Reset"));
     _autoRestartCheckbox = new wxCheckBox(this, ID_AutoRestartCheckBox, _("Automatic restart"));
-    _ringForeverCheckbox = new wxCheckBox(this, wxID_ANY, _("Ring fovever"));
+    _ringForeverCheckbox = new wxCheckBox(this, wxID_ANY, _("Ring forever"));
 
     set_properties();
     do_layout();
