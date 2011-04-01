@@ -69,24 +69,29 @@ CookTimerFrame::CookTimerFrame(wxWindow* parent)
 #endif	// _WIN32
 
 	_times.assign(times, times + WXSIZEOF(times));
-
 	_presetsRadioBox = new wxRadioBox(this, wxID_ANY, _("Presets"), wxDefaultPosition, wxDefaultSize, WXSIZEOF(times), presetsRadioBox_choices, 1, wxRA_SPECIFY_ROWS);
 	
     // begin wxGlade: CookTimerFrame::CookTimerFrame
-    _hoursSpinCtrl = new wxSpinCtrl(this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
-    _minutesSpinCtrl = new wxSpinCtrl(this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60);
-    _secondsSpinCtrl = new wxSpinCtrl(this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60);
-    _remainingTimeStatic = new wxStaticText(this, wxID_ANY, wxEmptyString);
-    _progressBar = new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL|wxGA_SMOOTH);
-    _startStopButton = new wxButton(this, ID_StartStopButton, wxEmptyString);
-    _resetButton = new wxButton(this, ID_ResetButton, _("&Reset"));
-    _autoRestartCheckbox = new wxCheckBox(this, ID_AutoRestartCheckBox, _("Automatic restart"));
-    _ringForeverCheckbox = new wxCheckBox(this, wxID_ANY, _("Ring forever"));
+    rootPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxCLIP_CHILDREN);
+    _hoursSpinCtrl = new wxSpinCtrl(rootPanel, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
+    _minutesSpinCtrl = new wxSpinCtrl(rootPanel, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60);
+    _secondsSpinCtrl = new wxSpinCtrl(rootPanel, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 60);
+    _remainingTimeStatic = new wxStaticText(rootPanel, wxID_ANY, wxEmptyString);
+    _progressBar = new wxGauge(rootPanel, wxID_ANY, 10, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL|wxGA_SMOOTH);
+    _startStopButton = new wxButton(rootPanel, ID_StartStopButton, wxEmptyString);
+    _resetButton = new wxButton(rootPanel, ID_ResetButton, _("&Reset"));
+    _autoRestartCheckbox = new wxCheckBox(rootPanel, ID_AutoRestartCheckBox, _("Automatic restart"));
+    _ringForeverCheckbox = new wxCheckBox(rootPanel, wxID_ANY, _("Ring forever"));
 
     set_properties();
     do_layout();
     // end wxGlade
-    
+
+	// Make sibling of other controls to fix tab order.
+	_presetsRadioBox->Reparent(rootPanel);
+
+	_presetsRadioBox->SetFocus();
+	
 	_taskBarIcon = new CookTimerTaskBarIcon();
 #if defined(__WXCOCOA__)
 	_dockIcon = new CookTimerTaskBarIcon(wxTaskBarIcon::DOCK);
@@ -97,6 +102,8 @@ CookTimerFrame::CookTimerFrame(wxWindow* parent)
 	_taskBarIcon->window = this;
 
 	UpdateControls();
+
+	rootPanel->Layout();
 	}
 
 CookTimerFrame::~CookTimerFrame()
@@ -130,35 +137,38 @@ void CookTimerFrame::do_layout()
 	{
     // begin wxGlade: CookTimerFrame::do_layout
     wxBoxSizer* rootSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* panelSizer = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* buttonsSizer = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* leftSizer = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_3 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_4 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_2 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
-    wxStaticText* label_1 = new wxStaticText(this, wxID_ANY, _("Hours"));
+    wxStaticText* label_1 = new wxStaticText(rootPanel, wxID_ANY, _("Hours"));
     sizer_1->Add(label_1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 3);
     sizer_1->Add(_hoursSpinCtrl, 0, wxALL, 3);
     sizer_3->Add(sizer_1, 1, wxEXPAND, 0);
-    wxStaticText* label_2 = new wxStaticText(this, wxID_ANY, _("Minutes"));
+    wxStaticText* label_2 = new wxStaticText(rootPanel, wxID_ANY, _("Minutes"));
     sizer_2->Add(label_2, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 3);
     sizer_2->Add(_minutesSpinCtrl, 0, wxALL, 3);
     sizer_3->Add(sizer_2, 1, wxEXPAND, 0);
-    wxStaticText* label_3 = new wxStaticText(this, wxID_ANY, _("Seconds"));
+    wxStaticText* label_3 = new wxStaticText(rootPanel, wxID_ANY, _("Seconds"));
     sizer_4->Add(label_3, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 3);
     sizer_4->Add(_secondsSpinCtrl, 0, wxALL, 3);
     sizer_3->Add(sizer_4, 1, wxEXPAND, 0);
     leftSizer->Add(sizer_3, 1, wxALIGN_CENTER_HORIZONTAL, 0);
     leftSizer->Add(_remainingTimeStatic, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 3);
     leftSizer->Add(_progressBar, 1, wxALL|wxEXPAND, 3);
-    rootSizer->Add(leftSizer, 1, wxEXPAND, 0);
-    wxStaticLine* static_line_1 = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL);
-    rootSizer->Add(static_line_1, 0, wxEXPAND, 0);
+    panelSizer->Add(leftSizer, 1, wxEXPAND, 0);
+    wxStaticLine* static_line_1 = new wxStaticLine(rootPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL);
+    panelSizer->Add(static_line_1, 0, wxEXPAND, 0);
     buttonsSizer->Add(_startStopButton, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 3);
     buttonsSizer->Add(_resetButton, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 3);
     buttonsSizer->Add(_autoRestartCheckbox, 0, wxALL, 3);
     buttonsSizer->Add(_ringForeverCheckbox, 0, wxALL, 3);
-    rootSizer->Add(buttonsSizer, 0, wxALIGN_CENTER_VERTICAL, 0);
+    panelSizer->Add(buttonsSizer, 0, wxALIGN_CENTER_VERTICAL, 0);
+    rootPanel->SetSizer(panelSizer);
+    rootSizer->Add(rootPanel, 1, wxEXPAND, 0);
     SetSizer(rootSizer);
     rootSizer->Fit(this);
     Layout();

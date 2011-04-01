@@ -94,6 +94,7 @@ class CookTimerFrame: public wxFrame
     wxButton* _resetButton;
     wxCheckBox* _autoRestartCheckbox;
     wxCheckBox* _ringForeverCheckbox;
+    wxPanel* rootPanel;
     // end wxGlade
 
 		DECLARE_EVENT_TABLE();
