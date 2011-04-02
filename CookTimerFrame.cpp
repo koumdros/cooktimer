@@ -299,6 +299,8 @@ void CookTimerFrame::UpdateControls()
 			taskbarIconTooltip += wxString::Format(wxT("- %02d:%02d:%02d"), hours, minutes, seconds); 
 
 		_taskBarIcon->SetIcon(wxICON(TrayIcon), taskbarIconTooltip);
+		
+		this->SetTitle(wxString::Format(wxT("%02d:%02d:%02d - Cook Timer"), hours, minutes, seconds));
 		}
 
 	_progressBar->SetValue(_seconds);
