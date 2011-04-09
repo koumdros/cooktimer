@@ -4,7 +4,7 @@
 // Author:      Julian Smart
 // Modified by:
 // Created:     01/02/97
-// RCS-ID:      $Id: setup0.h 51451 2008-01-29 23:11:55Z VZ $
+// RCS-ID:      $Id: setup0.h 60190 2009-04-16 00:57:35Z KO $
 // Copyright:   (c) Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -577,6 +577,18 @@
 // Recommended setting: 1
 #ifndef wxUSE_GRAPHICS_CONTEXT
 #define wxUSE_GRAPHICS_CONTEXT 0
+#endif
+
+// Enable the new wxCairoContext classes for an advanced
+// 2D drawing API.  (Still somewhat experimental)
+//
+// Please note that you will need to link with Cairo for this to work.
+//
+// Default is 0
+//
+// Recommended setting: 1
+#ifndef wxUSE_CAIRO
+#define wxUSE_CAIRO 0
 #endif
 
 // ----------------------------------------------------------------------------
