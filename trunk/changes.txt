@@ -1,12 +1,18 @@
-Changes since 0.9.1:
+Changes in 0.9.3:
+- Enhancement: Add labels for Hour, Minute and Second.
+- Enhancement: Display time in the title bar so it is visible in the taskbar.
+- Fix keyboard navigation.
+- Fix misspelled word "fovever".
+
+Changes in 0.9.2:
 - Added "Ring Forever" option.
 - Window is raised on timeout.
 - Minor GUI improvements.
 
-Changes since 0.9:
+Changes in 0.9.1:
 - Fixed inappropriate icon sizes bug for Win32 and Gtk
 
-Changes since 0.85:
+Changes in 0.9:
 - Enh: time in tooltip is displayed in 00:00:00 format(2-digit width always)
 - Enh: sound stops when reset or start is pressed after the previous timer times out.
 - Bugfix: controlling the application using the keyboard is now possible.
@@ -16,7 +22,7 @@ Changes since 0.85:
 - Enh: Changed the alarm sound with a much better one.
 - Enh: Changed the icon to a much better one.
 
-Changes since 0.8:
+Changes in 0.85:
 - Enh: Auto-popup on timeout.
 - Enh: Show time remaining in the system tray tooltip.
 - Fix: Fixed a bug that caused the program to display an incorrect time remaining for periods more than 1 hour
