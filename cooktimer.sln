@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cooktimer", "cooktimer.vcproj", "{A5C6B92A-FACF-41B8-BD44-DEAB0CA38B0B}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cooktimer", "cooktimer.vcxproj", "{A5C6B92A-FACF-41B8-BD44-DEAB0CA38B0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
