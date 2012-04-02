@@ -40,22 +40,22 @@ class CookTimerTaskBarIcon: public wxTaskBarIcon
 class CookTimerFrame: public wxFrame
 	{
 	public:
-    // begin wxGlade: CookTimerFrame::ids
-    enum {
-        ID_StartStopButton = wxID_HIGHEST + 1000,
-        ID_ResetButton = wxID_HIGHEST + 1001,
-        ID_AutoRestartCheckBox = wxID_HIGHEST + 1002
-    };
-    // end wxGlade
+	// begin wxGlade: CookTimerFrame::ids
+	enum {
+		ID_StartStopButton = wxID_HIGHEST + 1000,
+		ID_ResetButton = wxID_HIGHEST + 1001,
+		ID_AutoRestartCheckBox = wxID_HIGHEST + 1002
+	};
+	// end wxGlade
 
 		CookTimerFrame(wxWindow* parent);
 		~CookTimerFrame();
 
 	private:
-    // begin wxGlade: CookTimerFrame::methods
-    void set_properties();
-    void do_layout();
-    // end wxGlade
+	// begin wxGlade: CookTimerFrame::methods
+	void set_properties();
+	void do_layout();
+	// end wxGlade
 
 
 		unsigned int GetPeriod() const;
@@ -84,18 +84,18 @@ class CookTimerFrame: public wxFrame
 #endif
 
 	protected:
-    // begin wxGlade: CookTimerFrame::attributes
-    wxSpinCtrl* _hoursSpinCtrl;
-    wxSpinCtrl* _minutesSpinCtrl;
-    wxSpinCtrl* _secondsSpinCtrl;
-    wxStaticText* _remainingTimeStatic;
-    wxGauge* _progressBar;
-    wxButton* _startStopButton;
-    wxButton* _resetButton;
-    wxCheckBox* _autoRestartCheckbox;
-    wxCheckBox* _ringForeverCheckbox;
-    wxPanel* rootPanel;
-    // end wxGlade
+	// begin wxGlade: CookTimerFrame::attributes
+	wxSpinCtrl* _hoursSpinCtrl;
+	wxSpinCtrl* _minutesSpinCtrl;
+	wxSpinCtrl* _secondsSpinCtrl;
+	wxStaticText* _remainingTimeStatic;
+	wxGauge* _progressBar;
+	wxButton* _startStopButton;
+	wxButton* _resetButton;
+	wxCheckBox* _autoRestartCheckbox;
+	wxCheckBox* _ringForeverCheckbox;
+	wxPanel* rootPanel;
+	// end wxGlade
 
 		DECLARE_EVENT_TABLE();
 	}; // wxGlade: end class
