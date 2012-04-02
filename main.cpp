@@ -6,14 +6,14 @@
 class CookTimer: public wxApp
 	{
 	public:
-	    bool OnInit();
+		bool OnInit();
 	};
 
 IMPLEMENT_APP(CookTimer)
 
 bool CookTimer::OnInit()
 	{
-    CookTimerFrame *mainFrame = new CookTimerFrame(NULL);
-    mainFrame->Show();
-    return true;
+	CookTimerFrame *mainFrame = new CookTimerFrame(NULL);
+	mainFrame->Show();
+	return true;
 	}
