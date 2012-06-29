@@ -14,12 +14,15 @@ END_EVENT_TABLE()
 
 void CookTimerTaskBarIcon::OnLeftButtonDClick(wxTaskBarIconEvent& evt)
 	{
-	if (!window->IsShown())
+	const bool WasShown = window->IsShown();
+	
+	if(!WasShown && window->IsIconized())
 		{
-		window->Show(true);
-		window->Iconize(false);
-		window->Raise();
+			window->Iconize(WasShown);
+			window->Show(!WasShown);
 		}
+		
+	window->Raise();
 	}
 
 BEGIN_EVENT_TABLE(CookTimerFrame, wxFrame)
@@ -187,12 +190,12 @@ void CookTimerFrame::OnTimer(wxTimerEvent &event)
 
 	if (_seconds == 0)
 		{
-		Raise();
-		if (!IsShown())
+		if(!IsShown() && IsIconized())
 			{
-			Show(true);
 			Iconize(false);
 			}
+
+		Raise();
 
 		if (_autoRestartCheckbox->IsChecked())
 			{
@@ -308,7 +311,10 @@ void CookTimerFrame::UpdateControls()
 
 void CookTimerFrame::OnIconize(wxIconizeEvent &evt)
 	{
-	Show(!evt.Iconized());
+	if (evt.IsIconized())
+		{ 				// if the event reports that the frame has just been iconized
+		Show(false);	// removes minimized window from taskbar, leaving only systray icon
+		}
 	}
 
 unsigned int CookTimerFrame::GetCustomValue() const
