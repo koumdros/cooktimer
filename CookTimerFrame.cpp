@@ -362,3 +362,25 @@ void CookTimerFrame::StartStopTimer()
 
 	UpdateControls();
 	}
+
+void CookTimerFrame::SetTime(unsigned long inSeconds, bool start)
+	{
+	assert(inSeconds != 0);
+
+	const unsigned int hours = inSeconds / 3600;
+	const unsigned int minutes = inSeconds % 3600 / 60;
+	const unsigned int seconds = inSeconds % 60;
+
+	_hoursSpinCtrl->SetValue(hours);
+	_minutesSpinCtrl->SetValue(minutes);
+	_secondsSpinCtrl->SetValue(seconds);
+
+	_presetsRadioBox->SetSelection(4);
+
+	UpdateControls();
+
+	if (start)
+		{
+		StartStopTimer();
+		}
+	}
