@@ -63,6 +63,8 @@ class CookTimerFrame: public wxFrame
 		unsigned int GetCustomValue() const;
 		bool IsCustomSelected() const;
 
+		void StartStopTimer();
+
 		void OnTimer(wxTimerEvent &event);
 		void OnStartStopButton(wxCommandEvent &evt);
 		void OnResetButton(wxCommandEvent &evt);
