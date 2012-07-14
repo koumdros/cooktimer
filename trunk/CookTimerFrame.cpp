@@ -229,36 +229,7 @@ void CookTimerFrame::OnTimer(wxTimerEvent &event)
 
 void CookTimerFrame::OnStartStopButton(wxCommandEvent &evt)
 	{
-	if (_running)
-		{
-		_timer.Stop();
-		_reset = false;
-		_running = false;
-		}
-	else
-		{
-		if (_reset)
-			{
-			_seconds = GetPeriod();
-			
-			if (_seconds == 0)	// check for invalid value
-				{
-				wxBell();
-				return;
-				}
-			
-			_progressBar->SetRange(_seconds);
-			}
-
-		timeoutSound.Stop();
-		_startStopButton->SetFocus();
-		_timer.Start(1000);
-		
-		_reset = false;
-		_running = true;
-		}
-
-	UpdateControls();
+	StartStopTimer();
 	}
 
 void CookTimerFrame::OnResetButton(wxCommandEvent &evt)
@@ -356,4 +327,38 @@ void CookTimerFrame::OnAutoResetChecked(wxCommandEvent &evt)
 		_ringForeverCheckbox->SetValue(false);
 
 	_ringForeverCheckbox->Enable(!evt.IsChecked());
+	}
+
+void CookTimerFrame::StartStopTimer()
+	{
+	if (_running)
+		{
+		_timer.Stop();
+		_reset = false;
+		_running = false;
+		}
+	else
+		{
+		if (_reset)
+			{
+			_seconds = GetPeriod();
+			
+			if (_seconds == 0)	// check for invalid value
+				{
+				wxBell();
+				return;
+				}
+			
+			_progressBar->SetRange(_seconds);
+			}
+
+		timeoutSound.Stop();
+		_startStopButton->SetFocus();
+		_timer.Start(1000);
+		
+		_reset = false;
+		_running = true;
+		}
+
+	UpdateControls();
 	}
