@@ -51,6 +51,8 @@ class CookTimerFrame: public wxFrame
 		CookTimerFrame(wxWindow* parent);
 		~CookTimerFrame();
 
+		void SetTime(unsigned long seconds, bool start);
+
 	private:
 	// begin wxGlade: CookTimerFrame::methods
 	void set_properties();
